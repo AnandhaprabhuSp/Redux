@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
+import { bindActionCreators } from 'redux';
+import { homeAction } from "./actions/homeAction";
 
 class App extends Component {
+  componentDidMount() {
+    console.log('CDM');
+    const { homeAction } = this.props;
+    homeAction();
+  }
+  
   render() {
+    console.log(this.props);
     return (
       <div className="App">
         <header className="App-header">
@@ -25,4 +35,17 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  return{
+    home:state.home
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    homeAction: bindActionCreators(homeAction, dispatch)
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
+
